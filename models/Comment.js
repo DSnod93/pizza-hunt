@@ -27,6 +27,8 @@ const ReplySchema = new Schema({
     }
 });
 
+const Reply = model('Reply', ReplySchema);
+
 
 const CommentSchema = new Schema({
     writtenBy: {
@@ -53,9 +55,10 @@ const CommentSchema = new Schema({
 
 const Comment = model('Comment', CommentSchema);
 
+
 // get total count of comments and replies on retrieval
-CommentSchema.virtual('replyCount').get(function () {
+CommentSchema.virtual('replyCount').get(function() {
     return this.replies.length;
 });
 
-module.exports = Comment;
+module.exports = { Comment, Reply }

@@ -40,9 +40,14 @@ const pizzaController = {
             .catch(err => res.status(400).json(err));
     },
 
-    // update pizza by id
+    // Update pizzaById
+    // deconstructs the params and body data
+    // If we don't set { new: true }, it will return the original document - 
+    // We're instructing mongoose to return the new version of the document
+    // We're instructing mongoose to return the new version of the document
+    // runValidators include this explicit setting when updating data so that it knows to validate any new information
     updatePizza({ params, body }, res) {
-        Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true })
+        Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
             .then(dbPizzaData => {
                 if (!dbPizzaData) {
                     res.status(404).json({ message: 'No pizza found with this id!' });
@@ -52,6 +57,7 @@ const pizzaController = {
             })
             .catch(err => res.status(400).json(err));
     },
+
 
     // delete pizza
     deletePizza({ params }, res) {

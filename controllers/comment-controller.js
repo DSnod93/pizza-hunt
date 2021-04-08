@@ -21,7 +21,11 @@ const commentController = {
     // $push allows for duplicates
     // $addToSet does the same thing for push, but does not allow duplicates
     addReply({ params, body }, res) {
-        Comment.findOneAndUpdate({ _id: params.commentId }, { $push: { replies: body } }, { new: true, runValidators: true })
+        Comment.findOneAndUpdate(
+            { _id: params.commentId },
+            { $push: { replies: body } },
+            { new: true, runValidators: true }
+        )
             .then(dbPizzaData => {
                 if (!dbPizzaData) {
                     res.status(404).json({ message: 'No pizza found with this id' })
